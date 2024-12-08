@@ -14,17 +14,17 @@
         
         require('../util/conexion.php');
 
-        /* session_start(); */
-        /* if(!isset($_SESSION["usuario"])) {
+        session_start(); 
+        if(!isset($_SESSION["usuario"])) {
             header("location: ../usuario/iniciar_sesion.php");
             exit;
-        } */
+        } 
     ?>
 </head>
 <body>
     <div class="container">
         <h2>Bienvenid@ 
-            <?php// echo $_SESSION["usuario"] ?>
+            <?php echo $_SESSION["usuario"] ?>
         </h2> 
         <a class="btn btn-danger" href="../usuario/cerrar_sesion.php">Cerrar sesión</a>
         <h1>Listado de categoria</h1>
@@ -71,6 +71,7 @@
                 ?>
             </tbody>
         </table>
+        <a class="btn btn-secondary" href="../productos/index.php" align="center">Productos</a><br><br>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 

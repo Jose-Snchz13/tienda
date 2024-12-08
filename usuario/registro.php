@@ -18,10 +18,34 @@
         $usuario = $_POST["usuario"];
         $contrasena = $_POST["contrasena"];
 
-        $contrasena_cifrada = password_hash($contrasena, PASSWORD_DEFAULT);
+        $patron = '/^[a-zA-ZáéíóúÁÉÍÓÚñÑ0-9]{3,15}$/';
+        if(strlen($usuario) < 2){
+            $err_nombre = "Tamaño demasiado pequeño";
+        }elseif(strlen($usuario) > 15){
+            $err_nombre = "Tamaño demasiado grande";
+        }elseif(preg_match($patron, $usuario)) {
+            $sql = "SELECT * FROM usuarios WHERE usuario = '$usuario'";
+            $resultado = $_conexion -> query($sql);
+            //var_dump($resultado);
+            if($resultado -> num_rows == 0) {         
+                $patron =  "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,15}$/";
+                if(preg_match($patron, $contrasena)){   
+                    $contrasena_cifrada = password_hash($contrasena, PASSWORD_DEFAULT);
+                    $sql = "INSERT INTO usuarios VALUES ('$usuario', '$contrasena_cifrada')";
+                    $_conexion -> query($sql);
+                    header("location: ../usuario/iniciar_sesion.php");
+                    exit;
+                }else{
+                    $err_contraseña = "Contraseña invalida";    
+                }
+            }else{
+                $err_nombre = "Ese usuario ya existe.";
+            }
+        }else{
+            $err_nombre = "Caracteres no validos.";
+        }
 
-        $sql = "INSERT INTO usuarios VALUES ('$usuario', '$contrasena_cifrada')";
-        $_conexion -> query($sql);
+        
     }
     ?>
     <div class="container">
@@ -30,10 +54,12 @@
             <div class="mb-3">
                 <label class="form-label">Usuario</label>
                 <input class="form-control" name="usuario" type="text">
+                <?php if(isset($err_nombre)) echo "<span class='text-danger'>$err_nombre</span>" ?>
             </div>
             <div class="mb-3">
                 <label class="form-label">Contraseña</label>
                 <input class="form-control" name="contrasena" type="password">
+                <?php if(isset($err_contraseña)) echo "<span class='text-danger'>$err_contraseña</span>" ?>
             </div>
             <div class="mb-3">
                 <input class="btn btn-primary" type="submit" value="Registarse">

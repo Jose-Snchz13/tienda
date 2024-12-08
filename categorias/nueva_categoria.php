@@ -10,6 +10,11 @@
         ini_set( "display_errors", 1 ); 
         
         require('../util/conexion.php');
+        session_start(); 
+        if(!isset($_SESSION["usuario"])) {
+            header("location: ../usuario/iniciar_sesion.php");
+            exit;
+        } 
     ?>    
 </head>
 <body>

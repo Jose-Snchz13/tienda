@@ -32,7 +32,7 @@
                 //echo "<h2>P'adentro</h2>";
                 session_start();
                 $_SESSION["usuario"] = $usuario;
-                header("location: ../index.php");
+                header("location: ../productos/index.php");
             }
         }
     }
@@ -54,6 +54,7 @@
         </form>
         <h3>O, si aún no tienes cuenta, regístrate</h3>
         <a class="btn btn-secondary" href="registro.php">Registrarse</a>
+        <a class="btn btn-secondary" href="../index.php">Volver a la tienda</a>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
